@@ -4,12 +4,13 @@ from flask import Flask, request
 # SocketManager class - the class that handles the socket connections
 class SocketManager:
 
-    def __init__(self, app, gamesManager, accountManager):
+    def __init__(self, app, gamesManager, accountManager, port = 5000):
         self.app = app
         self.socketio = SocketIO(app, cors_allowed_origins="*")
         self.gamesManager = gamesManager
         self.accountManager = accountManager
         self.players_searching = []
+        self.port = port
 
         # ---- Socket routes ------
 
@@ -58,4 +59,4 @@ class SocketManager:
     
     # run the socket server
     def run(self):
-        self.socketio.run(self.app, debug=False)
+        self.socketio.run(self.app, debug=False, port=self.port, allow_unsafe_werzeug=True)

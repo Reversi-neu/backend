@@ -10,7 +10,7 @@ from socket_manager import SocketManager
 # Server class - the main class of the server
 class Server:
 
-    def __init__(self):
+    def __init__(self, port = 5000):
         self.app = Flask(__name__)
         CORS(self.app)
 
@@ -18,7 +18,7 @@ class Server:
         self.gamesManager = GamesManager(self.getNextGameID())
         self.accountManager = AccountManager()
         self.apiManager = APIManager(self.app, self.gamesManager, self.accountManager)
-        self.socketManager = SocketManager(self.app, self.gamesManager, self.accountManager)
+        self.socketManager = SocketManager(self.app, self.gamesManager, self.accountManager, port)
 
     # running the server
     def run(self):
