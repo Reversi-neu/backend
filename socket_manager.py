@@ -59,4 +59,4 @@ class SocketManager:
     
     # run the socket server
     def run(self):
-        self.socketio.run(self.app, debug=False, port=self.port, allow_unsafe_werzeug=True)
+        self.socketio.run(self.app, debug=False, host='0.0.0.0', port=self.port, allow_unsafe_werzeug=True)
