@@ -18,7 +18,7 @@ class Server:
         self.gamesManager = GamesManager(self.getNextGameID())
         self.accountManager = AccountManager()
         self.apiManager = APIManager(self.app, self.gamesManager, self.accountManager)
-        self.socketManager = SocketManager(self.app, self.gamesManager, self.accountManager, port)
+        self.socketManager = SocketManager(self.app, self.gamesManager, self.accountManager, self.apiManager, port)
 
     # running the server
     def run(self):

@@ -4,11 +4,12 @@ from flask import Flask, request
 # SocketManager class - the class that handles the socket connections
 class SocketManager:
 
-    def __init__(self, app, gamesManager, accountManager, port = 5000):
+    def __init__(self, app, gamesManager, accountManager, apiManager, port = 5000):
         self.app = app
         self.socketio = SocketIO(app, cors_allowed_origins="*")
         self.gamesManager = gamesManager
         self.accountManager = accountManager
+        self.apiManager = apiManager
         self.players_searching = []
         self.port = port
 
@@ -23,7 +24,9 @@ class SocketManager:
         # client has made a move in a game
         @self.socketio.on('makeMove')
         def handleSocketMove(data):
-            gamesManager.makeMove(data['gameType'],data["gameID"],data["move"])
+            game = gamesManager.makeMove(data['gameType'],data["gameID"],data["move"]).get_json()
+            if  game['winner'] != None:
+                self.apiManager.postGame(game['id'])
             emit("makeMove",{},broadcast=True)
 
         # client wants to search for a lobby
