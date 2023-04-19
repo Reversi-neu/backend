@@ -25,9 +25,9 @@ class SocketManager:
         @self.socketio.on('makeMove')
         def handleSocketMove(data):
             game = gamesManager.makeMove(data['gameType'],data["gameID"],data["move"]).get_json()
+            emit("makeMove",{},broadcast=True)
             if (game['winner']):
                 self.apiManager.postgame(game['id'])
-            emit("makeMove",{},broadcast=True)
 
         # client wants to search for a lobby
         @self.socketio.on('searchForLobby')
