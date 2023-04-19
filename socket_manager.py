@@ -25,7 +25,7 @@ class SocketManager:
         @self.socketio.on('makeMove')
         def handleSocketMove(data):
             game = gamesManager.makeMove(data['gameType'],data["gameID"],data["move"]).get_json()
-            if game['winner'] != None:
+            if (game['winner']):
                 self.apiManager.postgame(game['id'])
             emit("makeMove",{},broadcast=True)
 
